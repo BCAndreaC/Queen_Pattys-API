@@ -1,11 +1,14 @@
 version: "3"
 services:
   db:
-    # TODO: configura tu imagen de base de datos, te recomendamos una de estas:
-    # https://hub.docker.com/_/mongo
-    # https://hub.docker.com/_/postgres
-    # https://hub.docker.com/_/mysql
-    networks:
+  image: mongo:4.2 # https://hub.docker.com/_/mongo
+  volumes:
+    - ./data/db:/data/db # montamos la carpeta data/db en el directorio actual
+  environment:
+    MONGO_INITDB_ROOT_USERNAME: root
+    MONGO_INITDB_ROOT_PASSWORD: root
+  restart: always
+  networks:
       - private
   node:
     image: node:12 # https://hub.docker.com/_/node/
