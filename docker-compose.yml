@@ -1,15 +1,15 @@
-version: "3"
+version: "2.19.1"
 services:
   db:
-  image: mongo:4.2 # https://hub.docker.com/_/mongo
-  volumes:
-    - ./data/db:/data/db # montamos la carpeta data/db en el directorio actual
-  environment:
-    MONGO_INITDB_ROOT_USERNAME: root
-    MONGO_INITDB_ROOT_PASSWORD: root
-  restart: always
-  networks:
-      - private
+    image: mongo:4.2 # https://hub.docker.com/_/mongo
+    volumes:
+      - ./data/db:/data/db # montamos la carpeta data/db en el directorio actual
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    restart: always
+    networks:
+    - private
   node:
     image: node:12 # https://hub.docker.com/_/node/
     user: node
@@ -17,7 +17,7 @@ services:
     environment:
       NODE_ENV: production
       PORT: 8080
-      DB_URL: <CONNECTION STRING>
+      DB_URL: mongodb://bq:secret@db:27017/bq?authSource=admin
       JWT_SECRET: xxxxxxxx
       ADMIN_EMAIL: admin@localhost
       ADMIN_PASSWORD: changeme
