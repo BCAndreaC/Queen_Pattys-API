@@ -1,4 +1,9 @@
+/* eslint-disable no-console */
 const bcrypt = require('bcrypt');
+// const mongoose = require('mongoose');
+// const config = require('../config');
+const User = require('../models/User');
+const { connect } = require('../connect');
 
 const {
   requireAuth,
@@ -9,21 +14,46 @@ const {
   getUsers,
 } = require('../controller/users');
 
-const initAdminUser = (app, next) => {
+connect();
+// mongoose.connect(config.dbUrl, { useCreateIndex: true })
+//   .then(() => {
+//     console.log('Connected to the database');
+//   })
+//   .catch((error) => {
+//     console.error('Error connecting to the database:', error);
+//   });
+
+const initAdminUser = async (app, next) => {
   const { adminEmail, adminPassword } = app.get('config');
   if (!adminEmail || !adminPassword) {
+    console.info('No admin user provided');
     return next();
   }
 
+  // eslint-disable-next-line no-unused-vars
   const adminUser = {
     email: adminEmail,
     password: bcrypt.hashSync(adminPassword, 10),
-    roles: { admin: true },
+    role: 'admin',
   };
 
   // TODO: crear usuaria admin
   // Primero ver si ya existe adminUser en base de datos
   // si no existe, hay que guardarlo
+
+  const userExists = await User.findOne({ email: adminUser.email });
+  if (!userExists) {
+    try {
+      console.info('Creating admin user...');
+      const user = new User(adminUser);
+      console.info('Admin user created', user);
+      await user.save();
+    } catch (error) {
+      console.error(error, 'Error creating admin user');
+    }
+  } else {
+    console.info('Admin user already exists');
+  }
 
   next();
 };

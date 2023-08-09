@@ -17,7 +17,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(authMiddleware(secret));
 
-// const db = connect();
 // Registrar rutas
 routes(app, (err) => {
   if (err) {
@@ -30,5 +29,4 @@ routes(app, (err) => {
     console.info(`App listening on port ${port}`);
   });
 });
-
 connect();
