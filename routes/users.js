@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 // const mongoose = require('mongoose');
 // const config = require('../config');
 const User = require('../models/User');
-const { connect } = require('../connect');
+// const { connect } = require('../connect');
 
 const {
   requireAuth,
@@ -14,7 +14,7 @@ const {
   getUsers,
 } = require('../controller/users');
 
-connect();
+// connect();
 // mongoose.connect(config.dbUrl, { useCreateIndex: true })
 //   .then(() => {
 //     console.log('Connected to the database');

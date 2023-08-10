@@ -12,6 +12,8 @@ const app = express();
 app.set('config', config);
 app.set('pkg', pkg);
 
+connect();
+
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -29,4 +31,3 @@ routes(app, (err) => {
     console.info(`App listening on port ${port}`);
   });
 });
-connect();
