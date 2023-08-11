@@ -1,9 +1,6 @@
 /* eslint-disable no-console */
 const bcrypt = require('bcrypt');
-// const mongoose = require('mongoose');
-// const config = require('../config');
 const User = require('../models/User');
-// const { connect } = require('../connect');
 
 const {
   requireAuth,
@@ -13,15 +10,6 @@ const {
 const {
   getUsers,
 } = require('../controller/users');
-
-// connect();
-// mongoose.connect(config.dbUrl, { useCreateIndex: true })
-//   .then(() => {
-//     console.log('Connected to the database');
-//   })
-//   .catch((error) => {
-//     console.error('Error connecting to the database:', error);
-//   });
 
 const initAdminUser = async (app, next) => {
   const { adminEmail, adminPassword } = app.get('config');
@@ -126,6 +114,7 @@ module.exports = (app, next) => {
    * @code {404} si la usuaria solicitada no existe
    */
   app.get('/users/:uid', requireAuth, (req, resp) => {
+
   });
 
   /**

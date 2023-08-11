@@ -36,7 +36,8 @@ module.exports = (app, nextMain) => {
       if (!isPasswordValid) {
         return next(400);
       }
-      const accessToken = jwt.sign({ email }, secret, { expiresIn: '12h' });
+      // tenia la contraseña pero no da seguridad por que se puede desencriptar
+      const accessToken = jwt.sign({ uid: user.id, email: user.email, role: user.role }, secret, { expiresIn: '12h' });
       console.log(accessToken);
       resp.status(200).json({
         message: 'Autenticación correcta',
@@ -48,23 +49,11 @@ module.exports = (app, nextMain) => {
         message: 'Error al autenticar',
       });
     }
-    // const userExists = User.exists({ email, password });
-    // if (!userExists) {
-    //   next(400);
-    // } else {
-    //   const accessToken = jwt.sign({ email }, secret, { expiresIn: '12h' });
-    //   resp.header('Authorization', accessToken).json({
-    //     message: 'Autenticación correcta',
-    //     token: accessToken,
-    //   });
-    // }
 
     // TODO: autenticar a la usuarix
     // Hay que confirmar si el email y password
     // coinciden con un user en la base de datos
     // Si coinciden, manda un access token creado con jwt
-
-    // next();
   });
 
   return nextMain();
